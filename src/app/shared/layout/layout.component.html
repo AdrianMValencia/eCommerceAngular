@@ -1,26 +1,173 @@
 <div class="min-h-screen flex flex-col bg-gray-50">
-  <!-- Header -->
-  <header class="bg-white shadow">
-    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-      <div class="text-2xl font-bold text-gray-800">eCommerce</div>
-      <nav class="space-x-4">
-        <a href="#" class="text-gray-600 hover:text-blue-600">Inicio</a>
-        <a href="#" class="text-gray-600 hover:text-blue-600">Productos</a>
-        <a href="#" class="text-gray-600 hover:text-blue-600">Carrito</a>
-        <a href="#" class="text-gray-600 hover:text-blue-600">Contacto</a>
-      </nav>
+  <!-- Header/Navbar -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo -->
+        <div class="flex-shrink-0">
+          <a routerLink="/" class="text-2xl font-bold text-blue-600">
+            eCommerce
+          </a>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center space-x-8">
+          <a
+            routerLink="/"
+            routerLinkActive="text-blue-600"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="text-gray-700 hover:text-blue-600 transition font-medium"
+          >
+            Inicio
+          </a>
+          <a
+            routerLink="/products"
+            routerLinkActive="text-blue-600"
+            class="text-gray-700 hover:text-blue-600 transition font-medium"
+          >
+            Productos
+          </a>
+          <a
+            routerLink="/orders"
+            routerLinkActive="text-blue-600"
+            class="text-gray-700 hover:text-blue-600 transition font-medium"
+          >
+            Ordenes
+          </a>
+        </nav>
+
+        <!-- Cart Icon and Mobile Menu -->
+        <div class="flex items-center space-x-4">
+          <!-- Cart Badge -->
+          <a
+            routerLink="/cart"
+            class="relative text-gray-700 hover:text-blue-600 transition"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+              ></path>
+            </svg>
+            <span
+              *ngIf="cartState().itemsCount > 0"
+              class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full"
+            >
+              {{ cartState().itemsCount }}
+            </span>
+          </a>
+
+          <!-- Mobile Menu Button -->
+          <button
+            (click)="toggleMenu()"
+            class="md:hidden text-gray-700 hover:text-blue-600 transition"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation -->
+      <div
+        *ngIf="menuOpen"
+        class="md:hidden pb-4 border-t border-gray-200"
+      >
+        <a
+          routerLink="/"
+          (click)="closeMenu()"
+          class="block px-0 py-2 text-gray-700 hover:text-blue-600 transition font-medium"
+        >
+          Inicio
+        </a>
+        <a
+          routerLink="/products"
+          (click)="closeMenu()"
+          class="block px-0 py-2 text-gray-700 hover:text-blue-600 transition font-medium"
+        >
+          Productos
+        </a>
+        <a
+          routerLink="/orders"
+          (click)="closeMenu()"
+          class="block px-0 py-2 text-gray-700 hover:text-blue-600 transition font-medium"
+        >
+          Ordenes
+        </a>
+      </div>
     </div>
   </header>
 
   <!-- Main Content -->
-  <main class="flex-1 container mx-auto px-4 py-8">
-    <ng-content></ng-content>
+  <main class="flex-1 py-8">
+    <router-outlet></router-outlet>
   </main>
 
   <!-- Footer -->
   <footer class="bg-white border-t mt-8">
-    <div class="container mx-auto px-4 py-4 text-center text-gray-500 text-sm">
-      © 2026 eCommerce. Todos los derechos reservados.
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <!-- Company Info -->
+        <div>
+          <h3 class="font-bold text-gray-900 mb-4">eCommerce</h3>
+          <p class="text-sm text-gray-600">
+            Tu tienda en línea de confianza con productos de calidad.
+          </p>
+        </div>
+
+        <!-- Links -->
+        <div>
+          <h4 class="font-bold text-gray-900 mb-4">Enlaces</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="text-gray-600 hover:text-blue-600">Inicio</a></li>
+            <li><a href="#" class="text-gray-600 hover:text-blue-600">Productos</a></li>
+            <li><a href="#" class="text-gray-600 hover:text-blue-600">Carrito</a></li>
+          </ul>
+        </div>
+
+        <!-- Support -->
+        <div>
+          <h4 class="font-bold text-gray-900 mb-4">Soporte</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="text-gray-600 hover:text-blue-600">Contacto</a></li>
+            <li><a href="#" class="text-gray-600 hover:text-blue-600">FAQ</a></li>
+            <li><a href="#" class="text-gray-600 hover:text-blue-600">Devoluciones</a></li>
+          </ul>
+        </div>
+
+        <!-- Legal -->
+        <div>
+          <h4 class="font-bold text-gray-900 mb-4">Legal</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="text-gray-600 hover:text-blue-600">Términos</a></li>
+            <li><a href="#" class="text-gray-600 hover:text-blue-600">Privacidad</a></li>
+            <li><a href="#" class="text-gray-600 hover:text-blue-600">Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="border-t border-gray-200 pt-8 text-center text-sm text-gray-600">
+        <p>© 2026 eCommerce. Todos los derechos reservados.</p>
+      </div>
     </div>
   </footer>
 </div>

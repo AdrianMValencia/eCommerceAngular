@@ -1,0 +1,53 @@
+<div class="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center px-4">
+  <div class="bg-white rounded-lg shadow-lg p-8 max-w-md w-full text-center">
+    <!-- Success Icon -->
+    <div class="mb-6">
+      <div class="inline-flex items-center justify-center h-20 w-20 rounded-full bg-green-100">
+        <svg
+          class="h-10 w-10 text-green-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 13l4 4L19 7"
+          ></path>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <h1 class="text-3xl font-bold text-gray-900 mb-4">¡Gracias por tu compra!</h1>
+
+    <!-- Message -->
+    <p class="text-gray-600 mb-2">Tu orden ha sido creada exitosamente.</p>
+    <p class="text-gray-600 mb-8">
+      Te enviaremos los detalles de tu compra al correo electrónico registrado.
+    </p>
+
+    <!-- Order Info -->
+    <div class="bg-gray-50 rounded-lg p-4 mb-8">
+      <p class="text-sm text-gray-600 mb-1">Tu carrito ha sido vaciado</p>
+      <p class="text-sm text-gray-600">Podrás ver tus órdenes en tu cuenta</p>
+    </div>
+
+    <!-- Actions -->
+    <div class="space-y-3">
+      <button
+        routerLink="/products"
+        class="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-bold"
+      >
+        Continuar Comprando
+      </button>
+      <button
+        routerLink="/"
+        class="w-full px-6 py-3 bg-gray-200 text-gray-900 rounded-lg hover:bg-gray-300 transition font-medium"
+      >
+        Volver al Inicio
+      </button>
+    </div>
+  </div>
+</div>
