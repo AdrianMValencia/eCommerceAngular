@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { CartService } from '../../pages/cart/services';
+import { AuthState } from '../../core/state/auth.state';
 
 @Component({
     selector: 'app-layout',
@@ -13,9 +14,14 @@ import { CartService } from '../../pages/cart/services';
 export class LayoutComponent {
 
     private readonly cartService = inject(CartService);
+    private readonly router = inject(Router);
+    readonly authState = inject(AuthState);
 
     menuOpen = false;
     cartState = this.cartService.cartState;
+    canReadCatalog = computed(() => this.authState.hasPermission('products.read'));
+    canReadOrders = computed(() => this.authState.hasPermission('orders.read'));
+    displayName = computed(() => this.authState.username() || this.authState.email() || 'Cuenta');
 
     toggleMenu(): void {
         this.menuOpen = !this.menuOpen;
@@ -23,5 +29,11 @@ export class LayoutComponent {
 
     closeMenu(): void {
         this.menuOpen = false;
+    }
+
+    logout(): void {
+        this.authState.clearSession();
+        this.closeMenu();
+        void this.router.navigate(['/login']);
     }
 }

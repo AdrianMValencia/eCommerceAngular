@@ -9,7 +9,7 @@ import { BaseResponse } from '../models';
   providedIn: 'root'
 })
 export class ApiService {
-  protected baseUrl = `${environment.apiBackendUrl}`;
+  protected baseUrl = `${environment.apiBackendUrl ?? `${environment.apiUrl}/api`}`;
   protected http = inject(HttpClient);
 
   protected handleError(error: HttpErrorResponse) {

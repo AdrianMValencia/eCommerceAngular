@@ -21,6 +21,7 @@
             Inicio
           </a>
           <a
+            *ngIf="canReadCatalog()"
             routerLink="/products"
             routerLinkActive="text-blue-600"
             class="text-gray-700 hover:text-blue-600 transition font-medium"
@@ -28,6 +29,7 @@
             Productos
           </a>
           <a
+            *ngIf="canReadOrders()"
             routerLink="/orders"
             routerLinkActive="text-blue-600"
             class="text-gray-700 hover:text-blue-600 transition font-medium"
@@ -38,8 +40,31 @@
 
         <!-- Cart Icon and Mobile Menu -->
         <div class="flex items-center space-x-4">
+          <ng-container *ngIf="authState.isAuthenticated(); else guestActions">
+            <span class="hidden md:inline text-sm font-medium text-gray-600">
+              {{ displayName() }}
+            </span>
+            <button
+              type="button"
+              (click)="logout()"
+              class="hidden md:inline text-gray-700 hover:text-blue-600 transition font-medium"
+            >
+              Cerrar sesion
+            </button>
+          </ng-container>
+
+          <ng-template #guestActions>
+            <a
+              routerLink="/login"
+              class="hidden md:inline text-gray-700 hover:text-blue-600 transition font-medium"
+            >
+              Iniciar sesion
+            </a>
+          </ng-template>
+
           <!-- Cart Badge -->
           <a
+            *ngIf="authState.isAuthenticated()"
             routerLink="/cart"
             class="relative text-gray-700 hover:text-blue-600 transition"
           >
@@ -99,6 +124,7 @@
           Inicio
         </a>
         <a
+          *ngIf="canReadCatalog()"
           routerLink="/products"
           (click)="closeMenu()"
           class="block px-0 py-2 text-gray-700 hover:text-blue-600 transition font-medium"
@@ -106,12 +132,29 @@
           Productos
         </a>
         <a
+          *ngIf="canReadOrders()"
           routerLink="/orders"
           (click)="closeMenu()"
           class="block px-0 py-2 text-gray-700 hover:text-blue-600 transition font-medium"
         >
           Ordenes
         </a>
+        <a
+          *ngIf="!authState.isAuthenticated()"
+          routerLink="/login"
+          (click)="closeMenu()"
+          class="block px-0 py-2 text-gray-700 hover:text-blue-600 transition font-medium"
+        >
+          Iniciar sesion
+        </a>
+        <button
+          *ngIf="authState.isAuthenticated()"
+          type="button"
+          (click)="logout()"
+          class="block px-0 py-2 text-left text-gray-700 hover:text-blue-600 transition font-medium"
+        >
+          Cerrar sesion
+        </button>
       </div>
     </div>
   </header>

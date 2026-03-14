@@ -1,3 +1,6 @@
 export const environment = {
-    apiBackendUrl: "https://localhost:7282/api"
+    production: false,
+    apiUrl: 'https://localhost:7282',
+    // Backward-compatible alias for legacy services using ApiService.
+    apiBackendUrl: 'https://localhost:7282/api'
 };
